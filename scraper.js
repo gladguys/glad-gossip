@@ -1,21 +1,22 @@
 const request = require('request');
 const cheerio = require('cheerio');
 
-var searchTerm = 'gladiadores';
 var searchUrl = 'https://news.google.com/?hl=pt-BR&gl=BR&ceid=BR:pt-419';
 var savedData = [];
 
 request(searchUrl, function(err, response, html) {
-  // First we'll check to make sure no errors occurred when making the request
+  
   if (err) {
     return res.status(500).send(err);
   }
   var $ = cheerio.load(html);
-  // For each outer div with class g, parse the desired data
-  $('div.xrnccd.F6Welf.R7GTQ.keNKEd.j7vNaf').each(function(i, element) {
+  
+  $('article.MQsxIb.xTewfe.R7GTQ.keNKEd.j7vNaf.Cc0Z5d.EjqUne').each(function(i, element) {
     var title = $(this).find('.DY5T1d').text();
+	var font = $(this).find('.wEwyrc.AVN2gc.uQIVzc.Sksgp').text();
     savedData.push({
-      title: title
+      title: title,
+	  font: font
     });
   });
   console.log(JSON.stringify(savedData));
